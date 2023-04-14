@@ -18,20 +18,22 @@ public class Match {
 
     public void Run() {
         if (isCheck()) {
-            while (fighter1.health > 0 && fighter2.health > 0) {
-                System.out.println("--NEW ROUND--");
-                this.fighter2.health = this.fighter1.hit(this.fighter2);
-                if (isWin())
-                    break;
-
-                this.fighter1.health = this.fighter2.hit(this.fighter1);
-                if(isWin())
-                    break;
-
-                System.out.println(this.fighter1.name + " is health : " + this.fighter1.health);
-                System.out.println(this.fighter2.name + " is health : " + this.fighter2.health);
-
+            boolean isFighter1Turn = Math.random() < 0.5;
+            System.out.println("--NEW ROUND--");
+            while (fighter1.getHealth() > 0 && fighter2.getHealth() > 0) {
+                if(isFighter1Turn) {
+                    this.fighter2.setHealth(this.fighter1.hit(this.fighter2));
+                    System.out.println(this.fighter1.name + " hits!");
+                    System.out.println(this.fighter2.name + " is health : " + this.fighter2.health);
+                } else {
+                    this.fighter1.setHealth(this.fighter2.hit(this.fighter1));
+                    System.out.println(this.fighter2.name + " hits!");
+                    System.out.println(this.fighter1.name + " is health : " + this.fighter1.health);
+                }
+                isFighter1Turn = !isFighter1Turn;
             }
+
+            isWin();
         } else
             System.out.println("The weights of the players do not match.");
     }
@@ -40,19 +42,14 @@ public class Match {
         return (this.fighter1.weight >= minWeight && this.fighter1.weight <= maxWeight) && (this.fighter2.weight >= minWeight && this.fighter2.weight <= maxWeight);
     }
 
-    boolean isWin() {
+    void isWin() {
         if (this.fighter1.health == 0) {
             System.out.println(this.fighter2.name + " is winner!");
-            return true;
-        }
-        if (this.fighter2.health == 0) {
+        } else {
             System.out.println(this.fighter1.name + " is winner!");
-            return true;
-        }
-            return false;
-
         }
     }
+}
 
 
 
