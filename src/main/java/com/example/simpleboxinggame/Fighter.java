@@ -6,21 +6,26 @@ public class Fighter {
     int weight;
     int health;
     int dodge;
-    int starterFight;
 
     public Fighter(String name, int damage, int health, int weight, int dodge){
         this.name = name;
         this.damage = damage;
         this.health = health;
         this.weight = weight;
-        this.dodge = dodge;
-        this. starterFight = starterFight;
 
         if(dodge >= 0 && dodge <= 100){
             this.dodge = dodge;
         }else{
             this.dodge = 0;
         }
+    }
+
+    void setHealth(int health) {
+        this.health = health;
+    }
+
+    int getHealth() {
+        return this.health;
     }
 
     int hit (Fighter rival){
@@ -30,13 +35,10 @@ public class Fighter {
             System.out.println(" ---- ");
             return rival.health;
         }
-        return rival.health - this.damage;
+        //return (rival.health - this.damage < 0) ? (0) : (rival.health - this.damage);
+        return Math.max(rival.health - this.damage, 0);
     }
 
-    boolean starterFight(){
-        double firstHit = Math.random() * 100;
-        return firstHit <= this.starterFight;
-    }
 
     boolean isDodge(){
         double randomNumber = Math.random() * 100;
